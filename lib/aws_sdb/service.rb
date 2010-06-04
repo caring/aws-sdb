@@ -76,10 +76,10 @@ module AwsSdb
       doc = call(:get, params)
       results = []
       REXML::XPath.each(doc, '//Item') do |item_element|
-        item = { :name => item_element.get_text('Name') }
+        item = { :name => item_element.get_text('Name').to_s }
         attributes = {}
         item_element.each_element('Attribute') do |attribute|
-          attributes[attribute.get_text('Name')] = attribute.get_text('Value')
+          attributes[attribute.get_text('Name').to_s] = attribute.get_text('Value').to_s
         end
         item[:attributes] = attributes
         results << item
